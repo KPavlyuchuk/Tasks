@@ -28,7 +28,7 @@ void *func (void*_data) {
 	}
 	sleep(rand() % N);
         printf("tread's data %d\n", data->number);
-	buf.mtype = data->number + 1;
+	buf.mtype = data->number - 1;
 	if (msgsnd(msgid, &buf, 0, 0) < 0) {
 		perror ("msgsnd 1 error");
 		exit(errno);
@@ -54,12 +54,12 @@ int main() {
                        return errno;
                }
         }
-	buf.mtype = 1;
+	buf.mtype = N;
 	if (msgsnd(msgid, &buf, 0, 0) < 0) {
 		perror ("msgsnd 2 error");
 		return errno;
 	}
-	if (msgrcv(msgid, &buf, 0, N + 1, 0) < 0) {
+	if (msgrcv(msgid, &buf, 0, 0, 0) < 0) {
 		perror ("msgrcv 2 error");
 		return errno;
 	}
